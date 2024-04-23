@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label" for="mix_proportion">Enter the Mix Proportion:</label>
+            <input type="text" name="mix_proportion" id="mix_proportion" value="{{ request.form['mix_proportion'] }}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="concrete-grade">Select the Concrete Grade:</label>
+            <select class="form-select" name="concrete-grade" id="concrete-grade">
+                <option selected>Select</option>
+                {% for item in concrete_grades %}
+                    <option value="{{item}}">{{item}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <p>Possible ranges for WC Ratio</p>
+            <ul>
+                {% for item in wc_ratio_ranges.items() %}
+                    <li>{{ item[0] }} : {{ item[1][0] }}-{{ item[1][1] }}</li>
+                {% endfor %}
+            </ul>
+            <label class="form-label" for="wc_ratio">Enter the W/C Ratio: </label>
+            <input type="text" name="wc_ratio" id="wc_ratio" value="{{ request.form['wc_ratio'] }}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
+    </form>
+{% endblock content %}
+
+
+{% block result_content %}
+    {% if post_data_processed %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Result</h5>
+                <p class="card-text">{{ result|safe }}</p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock result_content %}
+
+        
